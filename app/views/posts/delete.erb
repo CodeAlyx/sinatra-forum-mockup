@@ -1,0 +1,9 @@
+<section>
+  <h2>Are you sure you want to delete your post on: <%= @forum.title %>?</h2>
+  <p>"<%= @post.content %>"</p>
+  <p><b><em>THIS CANNOT BE UNDONE!</em></b></p>
+  <form action='/forums/<%= @forum.slugF %>/posts/<%= @post.id %>' method='POST'>
+    <input type='hidden' name='_method' id='hidden' value='DELETE'/>
+    <input type='submit' value='Delete Post'/>
+  </form>
+</section>

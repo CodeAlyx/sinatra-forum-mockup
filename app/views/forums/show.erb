@@ -1,10 +1,10 @@
 <section>
-  <h1><u><%= @forum.title %></u></h1>
+  <h1><u><%= @forum.title %></u><%= @forum.user.id == current_user(session).id ? "(<a href='/forums/#{@forum.slugF}/edit'>Edit</a>) | (<a href='/forums/#{@forum.slugF}/delete'>Delete</a>)" : "" %></h1>
   <h3><em><%= @forum.topic %></em></h3>
   <% @forum.posts.each do |post| %>
     <section>
       <p>
-        <em><%= post.user.username %>:</em> <%= post.content %> <%= post.user == current_user(session) ? "<a href='/forums/#{@forum.slugF}/posts/#{post.id}/edit'>Edit</a>" : "" %>
+        <em><%= post.user.username %>:</em> <%= post.content %> <%= post.user == current_user(session) ? "(<a href='/forums/#{@forum.slugF}/posts/#{post.id}/edit'>Edit</a>) | (<a href='/forums/#{@forum.slugF}/posts/#{post.id}/delete'>Delete</a>)" : "" %>
       </p>
     </section>
   <% end %>

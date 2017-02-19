@@ -24,6 +24,26 @@ class ForumController < ApplicationController
     end
   end
 
+  get '/forums/:slug/edit' do
+    @forum = Forum.find_by_slugF(params[:slug])
+    if @forum.user.id == current_user(session).id
+      erb :'forums/edit'
+    else
+      flash[:message] = "You Do Not Have Permission To Edit This Forum"
+      redirect "/forums/#{@forum.slugF}"
+    end
+  end
+
+  get '/forums/:slug/delete' do
+    @forum = Forum.find_by_slugF(params[:slug])
+    if @forum.user.id == current_user(session).id
+      erb :'forums/delete'
+    else
+      flash[:message] = "You Do Not Have Permission To Edit This Forum"
+      redirect "/forums/#{@forum.slugF}"
+    end
+  end
+
   post '/forums' do
     if forum_exists?(params[:forum])
       flash[:message] = "A Forum Already Exists With That Title"
@@ -36,24 +56,22 @@ class ForumController < ApplicationController
     end
   end
 
-  get '/forums/:slug/posts/:id/edit' do
-    @forum = Forum.find_by_slugF(params[:slug])
-    @post = @forum.posts.find_by_id(params[:id])
-    erb :'posts/edit'
+  patch '/forums/:slug' do
+    forum = Forum.find_by_slugF(params[:slug])
+    if params[:forum].has_value?("")
+      flash[:message] = "Forums Must Have A Title and Topic"
+      redirect "/forums/#{forum.slugF}/edit"
+    else
+      forum.update(params[:forum])
+      redirect "/forums/#{forum.slugF}"
+    end
   end
 
-  post '/forums/:slug/posts/:id' do
+  delete '/forums/:slug' do
     forum = Forum.find_by_slugF(params[:slug])
-    post = forum.posts.find_by_id(params[:id])
-    post.update(params[:post])
-    forum.save
-    redirect "/forums/#{forum.slugF}"
+    flash[:message] = "#{forum.title} Has Been Deleted"
+    forum.delete
+    redirect '/forums'
   end
 
-  post '/forums/:slug/posts' do
-    forum = Forum.find_by_slugF(params[:slug])
-    forum.posts.build(content: params[:post][:content], user_id: current_user(session).id)
-    forum.save
-    redirect "/forums/#{forum.slugF}"
-  end
 end

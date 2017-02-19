@@ -1,0 +1,26 @@
+<section>
+  <form action='/forums/<%= @forum.slugF %>' method='POST'>
+    <section>
+      <label for='title'>Forum Title: </label>
+      <input type='string' name='forum[title]' id='title' value='<%= @forum.title %>'/>
+    </section>
+    <br/>
+    <section>
+      <label for='topic'>Forum Topic: </label>
+      <br/>
+      <textarea rows='5' cols='50' name='forum[topic]' id='topic'><%= @forum.topic %></textarea>
+    </section>
+    <br/>
+    <section>
+      <input type='hidden' name='_method' id='hidden' value='PATCH'/>
+      <input type='submit' value='Update Forum'/>
+    </section>
+  </form>
+  <% @forum.posts.each do |post| %>
+    <section>
+      <p>
+        <em><%= post.user.username %>:</em> <%= post.content %> <%= post.user == current_user(session) ? "<a href='/forums/#{@forum.slugF}/posts/#{post.id}/edit'>Edit</a>" : "" %>
+      </p>
+    </section>
+  <% end %>
+</section>
