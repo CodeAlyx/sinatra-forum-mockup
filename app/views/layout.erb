@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title></title>
+  </head>
+
+  <body>
+    <% if flash.has?(:message) %>
+      <section>
+        <%= flash[:message] %>
+      </section>
+    <% end %>
+    <section>
+      |  <a href='/users'>USERS</a>  |  <a href='/forums'>FORUMS</a>  |  <%= logged_in?(session) ? "<a href='/forums/new'>CREATE FORUM</a>    |    <a href='/users/logout'>LOG OUT</a>" : "<a href='/users/login'>LOG IN</a>  |  <a href='/users/signup'>SIGN UP</a>" %>  |
+    </section>
+    <br/>
+    <%= yield %>
+  </body>
+</html>

@@ -1,0 +1,9 @@
+<section>
+  <h1><u>Users</u></h1>
+  <% @users.each do |user| %>
+    <section>
+      <a href='/users/<%= user.slugU %>'><%= user.username %></a> - Forums Created: <%= user.forums.size %> - Posts: <%= user.posts.size %>
+    </section>
+    <br/>
+  <% end %>
+</section>

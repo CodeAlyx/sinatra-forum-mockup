@@ -1,0 +1,11 @@
+<section>
+  <h1><u><%= @user.username %></u></h1>
+  <h3>Number of Posts: <%= @user.posts.size %></h2>
+  <h2><%= @user.username %>'s Forums:</h3>
+  <ul>
+    <% @user.forums.each do |forum| %>
+      <li><a href='/forums/<%= forum.slugF %>'><h3><%= forum.title %></h3></a></li>
+    <% end %>
+  </ul>
+  <br/>
+</section>

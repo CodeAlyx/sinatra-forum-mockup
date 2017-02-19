@@ -1,0 +1,21 @@
+<section>
+  <h1><u><%= @forum.title %></u></h1>
+  <h3><em><%= @forum.topic %></em></h3>
+  <% @forum.posts.each do |post| %>
+    <section>
+      <% if post.id == @post.id %>
+        <p>
+          <em><%= post.user.username %>:</em>
+          <form action='/forums/<%= @forum.slugF %>/posts/<%= post.id %>' method='POST'>
+            <textarea rows='5' cols='50' name='post[content]' placeholder="<%= post.content %>"></textarea>
+            <input type='submit' value='Edit Post'/>
+          </form>
+        </p>
+      <% else %>
+        <p>
+          <em><%= post.user.username %>:</em> <%= post.content %>
+        </p>
+      <% end %>
+    </section>
+  <% end %>
+</section>
