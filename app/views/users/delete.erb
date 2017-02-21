@@ -1,0 +1,17 @@
+<section>
+  <h1>Are You Sure You Want To Delete <%= @user.username %>'s Profile?</h1>
+  <h3><b><em>This cannot be undone!</em></b></h3>
+  <section>
+    <form action='/users/<%= @user.slugU %>' method='POST'>
+      <section>
+        <label for='password'>Password: </label>
+        <input type='password' name='password' id='password'/>
+      </section>
+      <br/>
+      <section>
+        <input type='hidden' name='_method' id='hidden' value='DELETE'/>
+        <input type='submit' value='Delete Profile'/>
+      </section>
+    </form>
+  </section>
+</section>

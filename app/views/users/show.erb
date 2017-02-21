@@ -1,5 +1,5 @@
 <section>
-  <h1><u><%= @user.username %></u></h1>
+  <h1><u><%= @user.username %></u><%= @user == current_user(session) ? "(<a href='/users/#{@user.slugU}/edit'>Edit</a>) | (<a href='/users/#{@user.slugU}/delete'>Delete</a>)" : "" %></h1>
   <h3>Number of Posts: <%= @user.posts.size %></h2>
   <h2><%= @user.username %>'s Forums:</h3>
   <ul>

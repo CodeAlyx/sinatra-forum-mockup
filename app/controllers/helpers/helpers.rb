@@ -9,11 +9,15 @@ module ApplicationController::Helpers
   end
 
   def password_validation(params = {})
-    params[:user][:password] == params[:password_verification]
+    if params[:user][:password] && params[:password_validation]
+      params[:user][:password] == params[:password_verification]
+    else
+      true
+    end
   end
 
-  def password_authentification(params = {})
-    user = User.find_by(username: params[:username])
+  def password_authentification(params = {}, user = nil)
+    user ||= User.find_by(username: params[:username])
     user.authenticate(params[:password])
   end
 
@@ -25,4 +29,12 @@ module ApplicationController::Helpers
     !!Forum.find_by(title: params[:title])
   end
 
+  def delete_products_of(user_id)
+    Forum.all.select{|x| x.user_id == user_id}.each do |forum|
+      forum.destroy
+    end
+    Post.all.select{|x| x.user_id == user_id}.each do |post|
+      post.destroy
+    end
+  end
 end

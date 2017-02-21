@@ -1,22 +1,26 @@
-<section>
-  <h1><u><%= @forum.title %></u><%= @forum.user.id == current_user(session).id ? "(<a href='/forums/#{@forum.slugF}/edit'>Edit</a>) | (<a href='/forums/#{@forum.slugF}/delete'>Delete</a>)" : "" %></h1>
-  <h3><em><%= @forum.topic %></em></h3>
-  <% @forum.posts.each do |post| %>
-    <section>
-      <p>
-        <em><%= post.user.username %>:</em> <%= post.content %> <%= post.user == current_user(session) ? "(<a href='/forums/#{@forum.slugF}/posts/#{post.id}/edit'>Edit</a>) | (<a href='/forums/#{@forum.slugF}/posts/#{post.id}/delete'>Delete</a>)" : "" %>
-      </p>
-    </section>
-  <% end %>
-  <% if logged_in?(session) %>
-    <section>
-      <form action='/forums/<%= @forum.slugF %>/posts' method='POST'>
-        <section>
-          <textarea rows='5' cols='50' name='post[content]' id='post_content'placeholder="What do you think of this?"></textarea>
-          <br/>
-          <input type='submit' value='Post On Forum'/>
-        </section>
-      </form>
-    </section>
-  <% end %>
-</section>
+<% if Forum.all.size > 0 %>
+  <section>
+    <h1><u><%= @forum.title %></u><%= current_user(session) && @forum.user.id == current_user(session).id ? "(<a href='/forums/#{@forum.slugF}/edit'>Edit</a>) | (<a href='/forums/#{@forum.slugF}/delete'>Delete</a>)" : "" %></h1>
+    <h3><em><%= @forum.topic %></em></h3>
+    <% @forum.posts.each do |post| %>
+      <section>
+        <p>
+          <em><%= post.user.username %>:</em> <%= post.content %> <%= post.user == current_user(session) ? "(<a href='/forums/#{@forum.slugF}/posts/#{post.id}/edit'>Edit</a>) | (<a href='/forums/#{@forum.slugF}/posts/#{post.id}/delete'>Delete</a>)" : "" %>
+        </p>
+      </section>
+    <% end %>
+    <% if logged_in?(session) %>
+      <section>
+        <form action='/forums/<%= @forum.slugF %>/posts' method='POST'>
+          <section>
+            <textarea rows='5' cols='50' name='post[content]' id='post_content'placeholder="What do you think of this?"></textarea>
+            <br/>
+            <input type='submit' value='Post On Forum'/>
+          </section>
+        </form>
+      </section>
+    <% end %>
+  </section>
+<% else %>
+  <h1>Unfortunately There Are No Forums Yet</h1>
+<% end %>
